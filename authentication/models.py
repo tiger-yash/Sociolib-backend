@@ -59,6 +59,9 @@ class Account(AbstractBaseUser):
 
     def __str__(self):
         return self.username
+        
+    def get_profile_image_filename(self):
+        return str(self.profile_image)[str(self.profile_image).index('profile_images/' + str(self.pk) + "/"):]
 
         # For checking permissions. to keep it simple all admin have ALL permissons
     def has_perm(self, perm, obj=None):
