@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'authentication',
+    'library',
+    'friends',
 ]
 
 MIDDLEWARE = [
