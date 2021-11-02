@@ -32,6 +32,7 @@ class IssueView(generics.GenericAPIView):
         user = Account.objects.get(id=request.user.id)
         book = BookInfo.objects.get(pk=pk)
         user.books.add(book)
+        user.credit-=book.price
         user.save()
         return Response(status=status.HTTP_201_CREATED)
 
