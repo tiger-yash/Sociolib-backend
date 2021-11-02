@@ -3,19 +3,19 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .serializers import (ProfileSerializer)
+from .serializers import (FriendSerializer)
 from authentication.models import Account
 from friends.models import FriendList,FriendRequest
 
 class FriendView(generics.GenericAPIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    serializer_class = ProfileSerializer
+    serializer_class = FriendSerializer
 
     ### TO GET SPECIFIC USER DATA
     def get(self,request,pk):
         try:
-            serializer=ProfileSerializer(Account.objects.get(id=pk))
+            serializer=FriendSerializer(Account.objects.get(id=pk))
             data=serializer.data
             person=Account.objects.get(pk=pk)
             friend_status(data,request,person)
@@ -26,7 +26,7 @@ class FriendView(generics.GenericAPIView):
     ### TO SEND FRIEND REQUEST
     def post(self,request,pk):
         try:
-            serializer=ProfileSerializer(Account.objects.get(id=pk))
+            serializer=FriendSerializer(Account.objects.get(id=pk))
             data=serializer.data
             person=Account.objects.get(id=pk)
             sender=Account.objects.get(username=request.user)
@@ -45,7 +45,7 @@ class FriendView(generics.GenericAPIView):
     ### TO CANCEL SENT REQUEST
     def patch(self,request,pk):
         try:
-            serializer=ProfileSerializer(Account.objects.get(id=pk))
+            serializer=FriendSerializer(Account.objects.get(id=pk))
             data=serializer.data
             person=Account.objects.get(id=pk)
             obj=FriendRequest.objects.get(sender=request.user,receiver=person)
@@ -58,7 +58,7 @@ class FriendView(generics.GenericAPIView):
     ### TO UNFRIEND
     def delete(self,request,pk): 
         try:
-            serializer=ProfileSerializer(Account.objects.get(id=pk))
+            serializer=FriendSerializer(Account.objects.get(id=pk))
             data=serializer.data
             person=Account.objects.get(id=pk)
             obj=FriendList.objects.get(user=request.user)
@@ -71,7 +71,7 @@ class FriendView(generics.GenericAPIView):
 class SearchView(generics.GenericAPIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    serializer_class = ProfileSerializer
+    serializer_class = FriendSerializer
 
     ### TO SEARCH FOR USERS
     def get(self,request):
@@ -80,7 +80,7 @@ class SearchView(generics.GenericAPIView):
             users=Account.objects.filter(username__icontains=get_data)
         else:
             users=Account.objects.all()
-        serializer=ProfileSerializer(users,many=True)
+        serializer=FriendSerializer(users,many=True)
         data=serializer.data
         for user in data:
             person=Account.objects.get(pk=user['id'])
@@ -90,13 +90,13 @@ class SearchView(generics.GenericAPIView):
 class FriendCreationView(generics.GenericAPIView):   
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    serializer_class = ProfileSerializer
+    serializer_class = FriendSerializer
     queryset=""
     
     ### TO ACCEPT Friend Request
     def post(self,request,pk):
         try:
-            serializer=ProfileSerializer(Account.objects.get(pk=pk))
+            serializer=FriendSerializer(Account.objects.get(pk=pk))
             person=Account.objects.get(id=pk)
             obj=FriendRequest.objects.get(sender=person,receiver=request.user)
             obj.accept()
@@ -109,7 +109,7 @@ class FriendCreationView(generics.GenericAPIView):
     ### TO DECLINE Friend Request
     def delete(self,request,pk):
         try:
-            serializer=ProfileSerializer(Account.objects.get(pk=pk))
+            serializer=FriendSerializer(Account.objects.get(pk=pk))
             person=Account.objects.get(id=pk)
             obj=FriendRequest.objects.get(sender=person,receiver=request.user)
             obj.decline()
