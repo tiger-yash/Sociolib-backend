@@ -9,6 +9,15 @@ def get_default_cover_image():
     return "sample/Full-Moon.jpg"
 
 # Create your models here.
+class Reviews(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="critic")
+    comment = models.CharField(max_length=280)
+    rating = models.DecimalField(max_digits=2,decimal_places=1)
+    is_owned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.book.name
 class BookInfo(models.Model):
     name = models.CharField(max_length=50, unique=True)
     genre = models.CharField(max_length=20)
@@ -17,18 +26,7 @@ class BookInfo(models.Model):
     cover_image = models.ImageField(max_length=255, upload_to=get_cover_image_filepath,
                                       null=True, blank=True, default=get_default_cover_image)
     price = models.IntegerField(default=0)
-
+    reviews=models.ManyToManyField(Reviews,blank=True, related_name='customer_reviews',)
     def __str__(self):
         return self.name
 
-class Reviews(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="critic")
-    book = models.ForeignKey(
-        settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="reviewed_book")
-    comment = models.CharField(max_length=280)
-    rating = models.DecimalField(max_digits=2,decimal_places=1)
-    is_owned = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.book.name

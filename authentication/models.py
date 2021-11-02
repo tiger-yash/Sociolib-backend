@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from library.models import BookInfo
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username,first_name,last_name, password=None):
         if not email:
@@ -51,7 +51,8 @@ class Account(AbstractBaseUser):
     credit = models.IntegerField(default=500)
     profile_image = models.ImageField(max_length=255, upload_to=get_profile_image_filepath,
                                       null=True, blank=True, default=get_default_profile_image)
-                                      
+    books = models.ManyToManyField(BookInfo,blank=True, related_name="bought_books")
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
