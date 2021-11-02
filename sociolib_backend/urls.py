@@ -37,6 +37,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('auth/', include('authentication.urls')),
+    path('library/', include('library.urls')),
+    path('friends/', include('friends.urls')),
 ]
 
 if settings.DEBUG:
