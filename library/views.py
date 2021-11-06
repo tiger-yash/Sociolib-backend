@@ -10,6 +10,7 @@ from .models import BookInfo, Reviews
 
 
 class BooksView(generics.GenericAPIView):
+    queryset = ''
     permission_classes = []
     serializer_class = BooksSerializer
 
