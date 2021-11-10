@@ -26,7 +26,7 @@ SECRET_KEY = '04=-5!*4$7^f1=xo9spfnradvr4f5^mgf(05ksadcas2uz^3(ee%vz%i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sociolib-backend.herokuapp.com/','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['sociolib-api.herokuapp.com/','127.0.0.1','localhost']
 
 AUTH_USER_MODEL = 'authentication.Account'
 # Application definition
