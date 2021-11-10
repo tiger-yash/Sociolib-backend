@@ -1,0 +1,1 @@
+web: gunicorn sociolib_backend.wsgi --log-file -

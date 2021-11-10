@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '04=-5!*4$7^f1=xo9spfnradvr4f5^mgf(05ksadcas2uz^3(ee%vz%i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sociolib-backend.herokuapp.com/','127.0.0.1','localhost']
 
 AUTH_USER_MODEL = 'authentication.Account'
 # Application definition
@@ -167,3 +168,4 @@ SWAGGER_SETTINGS = {
       }
    }
 }
+django_heroku.settings(locals())
