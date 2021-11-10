@@ -14,6 +14,6 @@ class ReviewsSerializer(serializers.ModelSerializer):
     comment = serializers.CharField(max_length=280)
     rating = serializers.DecimalField(max_digits=2,decimal_places=1)
     class Meta:
-        model=BookInfo
+        model=Reviews
         fields=('comment','rating')
     

@@ -52,11 +52,11 @@ class ReviewView(generics.GenericAPIView):
             if book in user.books.all():
                 is_owned=True
             review=Reviews.objects.create(user=user,comment=request.data['comment'], rating=request.data['rating'],is_owned=is_owned)
-            book.reviews.add(review)
+            book.book_review.add(review)
             book.save()
             final_rating=0
             people=0
-            for rev in book.reviews.all():
+            for rev in book.book_review.all():
                 final_rating+=rev.rating
                 people+=1
             final_rating/=people

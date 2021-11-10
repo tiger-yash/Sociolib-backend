@@ -17,7 +17,7 @@ class Reviews(models.Model):
     is_owned = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.book.name
+        return self.comment
 class BookInfo(models.Model):
     name = models.CharField(max_length=50, unique=True)
     genre = models.CharField(max_length=20)
@@ -26,7 +26,8 @@ class BookInfo(models.Model):
     cover_image = models.ImageField(max_length=255, upload_to=get_cover_image_filepath,
                                       null=True, blank=True, default=get_default_cover_image)
     price = models.IntegerField(default=0)
-    reviews=models.ManyToManyField(Reviews,blank=True, related_name='customer_reviews',)
+    book_review=models.ManyToManyField(Reviews,blank=True, related_name='customer_reviews',)
+    summary= models.CharField(max_length=1000,null=True)
     def __str__(self):
         return self.name
 
