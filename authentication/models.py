@@ -18,9 +18,11 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, password):
+    def create_superuser(self, email, username,first_name,last_name, password):
         user = self.create_user(
             email=self.normalize_email(email),
+            first_name=first_name,
+            last_name=last_name,
             password=password,
             username=username,
         )
@@ -54,7 +56,7 @@ class Account(AbstractBaseUser):
     books = models.ManyToManyField(BookInfo,blank=True, related_name="bought_books")
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email','first_name','last_name']
 
     objects = MyAccountManager()
 
