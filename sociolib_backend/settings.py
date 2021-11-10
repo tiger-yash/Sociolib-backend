@@ -135,6 +135,7 @@ USE_L10N = True
 
 USE_TZ = False
 
+django_heroku.settings(locals())
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -145,7 +146,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 
 TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
@@ -168,4 +169,3 @@ SWAGGER_SETTINGS = {
       }
    }
 }
-django_heroku.settings(locals())
