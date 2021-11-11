@@ -37,7 +37,7 @@ def get_profile_image_filepath(self, filename):
 
 
 def get_default_profile_image():
-    return "sample/Full-Moon.jpg"
+    return "sample/profile_icon.jpeg"
 
 class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)

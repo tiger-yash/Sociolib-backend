@@ -2,11 +2,11 @@ from django.db import models
 from django.conf import settings
 
 def get_cover_image_filepath(self, filename):
-    return 'profile_images/' + str(self.pk) + '/profile_image.png'
+    return 'book_images/' + str(self.pk) + '/book_image.png'
 
 
 def get_default_cover_image():
-    return "sample/Full-Moon.jpg"
+    return "sample/book.jpg"
 
 # Create your models here.
 class Reviews(models.Model):
