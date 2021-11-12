@@ -57,6 +57,5 @@ class LoginSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('id', 'email', 'username',
-                  'first_name', 'last_name', 'credit', 'date_joined','books')
+        fields='__all__'
         depth=2
