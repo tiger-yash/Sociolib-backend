@@ -44,8 +44,8 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(
         verbose_name='date joined', auto_now_add=True)
-    first_name = models.CharField(max_length=50, unique=True)
-    last_name = models.CharField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -54,7 +54,9 @@ class Account(AbstractBaseUser):
     profile_image = models.ImageField(max_length=255, upload_to=get_profile_image_filepath,
                                       null=True, blank=True, default=get_default_profile_image)
     books = models.ManyToManyField(BookInfo,blank=True, related_name="bought_books")
-
+    about_me=models.CharField(max_length=5000)
+    interests=models.CharField(max_length=500)
+    
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email','first_name','last_name']
 

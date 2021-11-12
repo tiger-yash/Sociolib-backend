@@ -52,6 +52,15 @@ class ProfileView(generics.GenericAPIView):
         serializer = UserSerializer(Account.objects.get(id=request.user.id))
         return Response(serializer.data)
 
+    def post(self,request):
+        serializer = UserSerializer(Account.objects.get(username=request.data.username))
+        if serializer.is_valid():
+            data = serializer.data
+            data['password'] = None
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
     def put(self, request):
         serializer = UserSerializer(Account.objects.get(
             id=request.user.id), data=request.data)
