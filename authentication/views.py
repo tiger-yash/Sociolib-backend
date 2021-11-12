@@ -73,3 +73,12 @@ class ProfileView(generics.GenericAPIView):
         profile = Account.objects.get(id=request.user.id)
         profile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class AllUsersView(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        serializer = UserSerializer(Account.objects.all(),many=True)
+        return Response(serializer.data)
