@@ -2,6 +2,7 @@ from rest_framework import serializers
 from authentication.models import Account
 from django.contrib.auth import authenticate
 from rest_framework.validators import UniqueValidator
+from friends.models import FriendList
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -26,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                                            last_name=validated_data["last_name"])
         authenticate(
             username=validated_data["username"], password=validated_data["password"])
+        FriendList.objects.create(user=user)
         return user
 
 

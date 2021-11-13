@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .serializers import (FriendSerializer)
+from .serializers import (FriendSerializer,AllFriendsSerializer)
 from authentication.models import Account
 from friends.models import FriendList,FriendRequest
 
@@ -115,7 +115,7 @@ class FriendCreationView(generics.GenericAPIView):
             obj.decline()
             data=serializer.data
             friend_status(data,request,person)
-            return Response(data,status=status.HTTP_201_CREATED)
+            return Response(data,status=status.HTTP_200_OK)
         except:
             return Response({"non_field_errors":["User Does Not Exist"]},status=status.HTTP_400_BAD_REQUEST)
 
@@ -143,3 +143,36 @@ def friend_status(user,request,person):
             user["request_sent"]=True
         elif received:
             user["request_received"]=True
+
+class AllRequestsView(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = Account.objects.get(id=request.user.id)
+        data={}
+        arr=[]
+        sent=FriendRequest.objects.filter(sender=user)
+        for x in sent:
+            if x.is_active:
+                arr.append({'username':x.receiver.username,'id':x.receiver.id})
+        data["sent"]=arr
+        arr=[]
+        received=FriendRequest.objects.filter(receiver=user)
+        for x in received:
+            if x.is_active:
+                arr.append({'username':x.sender.username,'id':x.sender.id})
+        data["received"]=arr
+        return Response(data,status=status.HTTP_201_CREATED)
+
+class AllFriendsView(generics.GenericAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    serializer_class = AllFriendsSerializer
+
+    ### TO SEARCH FOR USERS
+    def post(self,request):
+        user=Account.objects.get(username=request.data["username"])
+        serializer=AllFriendsSerializer(FriendList.objects.get(user=user))
+        data=serializer.data
+        return  Response(data,status=status.HTTP_200_OK)

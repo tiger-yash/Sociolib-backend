@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from authentication.models import Account
+from friends.models import FriendList,FriendRequest
 
 
 class FriendSerializer(serializers.ModelSerializer):
@@ -10,3 +11,9 @@ class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         model=Account
         fields=('id','username','is_self','is_friend','request_sent','request_received')
+
+class AllFriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=FriendList
+        fields='__all__'
+        depth=2

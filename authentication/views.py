@@ -23,7 +23,6 @@ class RegisterView(generics.CreateAPIView):
         if serializer.is_valid():
             self.perform_create(serializer)
             token = create_auth_token(serializer.instance)
-
             return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
